@@ -9,6 +9,7 @@ let imageSchema = new Schema({
         auto: true
     },     
     image: { type: String },
+    albumId: {type: mongoose.Schema.Types.ObjectId, ref:"album"},
     grid: [
         {
         gridId: { type: String, required: true },

@@ -1,4 +1,5 @@
 const imageModel = require("../models/ImageModel")
+const albumModel = require("../models/albumModel")
 const sharp = require("sharp");
 
 exports.createMultipleImage = async (req, res) => {
@@ -16,24 +17,27 @@ exports.createMultipleImage = async (req, res) => {
         .toBuffer();
 
       let data = JSON.parse(req.body.data);
-
-      await imageModel.create({
-        image: `data:image/jpeg;base64,${previewBuffer.toString("base64")}`,
-        grid: [
-          {
-            gridId: req.body.gridId,
-            w: data[pos].w ?? 2,
-            h: data[pos].h ?? 2,
-            x: data[pos].x,
-            y: data[pos].y,
-          }
-        ]
-      });
+      albumModel.findById(req.body.albumId,async (error,album)=>{
+        await imageModel.create({
+          image: `data:image/jpeg;base64,${previewBuffer.toString("base64")}`,
+          albumId:album._id,
+          grid: [
+            {
+              gridId: req.body.gridId,
+              w: data[pos].w ?? 2,
+              h: data[pos].h ?? 2,
+              x: data[pos].x,
+              y: data[pos].y,
+            }
+          ]
+        });
 
       results.push({
         filename: file.originalname,
         status: "ok"
       });
+      })
+
     }));
 
     res.json({ message: "Upload terminé", results });
@@ -249,7 +253,7 @@ exports.rotateImage = async (req, res) => {
 
 exports.getImage = async (req, res) => {
   try {
-    const image = await imageModel.findById(req.params.imageId);
+    const image = await imageModel.findById(req.params.imageId).populate("album");
     if (!image) {
       return res.status(404).json({ message: "Image introuvable" });
     }
@@ -267,7 +271,7 @@ exports.getImageByGrid = async (req, res) => {
       return res.status(400).json({ message: "gridId est requis" });
     }
 
-    const images = await imageModel.find({ "grid.gridId": gridId });
+    const images = await imageModel.find({ "grid.gridId": gridId }).populate("album");
     res.status(200).json(images);
   } catch (error) {
     console.error(error);
@@ -311,5 +315,19 @@ exports.updateDescription = async (req,res)=>{
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Erreur lors de la mise à jour de la description", error });
+  }
+}
+exports.findImagesOfAlbum = async (req,res) =>{
+  try {
+    const { albumId } = req.params;
+    if (!albumId) {
+      return res.status(400).json({ message: "albumId est requis" });
+    }
+
+    const images = await imageModel.find({ "albumId": albumId }).populate("album");
+    res.status(200).json(images);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Impossible de récupérer les images", error });
   }
 }

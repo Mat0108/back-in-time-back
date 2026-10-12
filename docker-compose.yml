@@ -10,7 +10,6 @@ services:
     env_file: .env
     ports:
       - 8083:8083
-      - 466:466
     environment:
         - ENV_TYPE=prod
         - NODE_PORT= 8083

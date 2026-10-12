@@ -38,7 +38,5 @@ ENV NODE_ENV=production
 # Port exposé
 EXPOSE 8083
 
-EXPOSE 466
-
-# Commande de lancement
+#Commande de lancement
 CMD ["npm", "start"]

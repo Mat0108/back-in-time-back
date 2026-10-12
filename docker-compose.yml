@@ -1,7 +1,7 @@
 
 services:
-  BackInTime:
-    container_name: BackInTime
+  backintime:
+    container_name: backintime
     # depends_on:
     #   - mongodb
     #on build le server avec le dockerfile du dossier server

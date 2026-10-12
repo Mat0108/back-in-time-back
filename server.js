@@ -18,7 +18,7 @@ app.use(express.static('public'));
 const allowedOrigins = [
   /\.netlify\.app$/,     
   /\.netlify\.live$/,   
-  'https://abatjourimpromptu.fr',
+  // 'https://abatjourimpromptu.fr', futur url de BackInTime
   'http://localhost:3000',
   'http://127.0.0.1:3000'
 ];

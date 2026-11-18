@@ -67,12 +67,12 @@ async function connectWithRetry(maxRetries = 5, delay = 2000) {
 connectWithRetry();
 // Import et configuration des routes de l'application
 const imageRoute = require("./app/routes/imageRoute");
-
+const albumRoute = require("./app/routes/albumRoute");
 imageRoute(app,corsOptions);
-
+albumRoute(app,corsOptions)
 app.get("/", (req, res) => {
   res.status(200)
-  res.json({ message: `Bienvenue sur l'application AbatJourImpromptu : ${version}` });
+  res.json({ message: `Bienvenue sur l'application BackInTime : ${version}` });
 });
 
 // Configuration du port d'écoute du serveur

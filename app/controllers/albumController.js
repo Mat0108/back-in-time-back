@@ -7,15 +7,15 @@ exports.findAlbum = async (req,res) =>{
     if (!albumId) {
       return res.status(400).json({ message: "albumId est requis" });
     }
-    const album = await albumModel.findById(albumId);
+    const album = await albumModel.find({numero:albumId});
     res.status(200).json(album);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Impossible de récupérer les images", error });
+    res.status(500).json({ message: "Impossible de récupérer l'album", error });
   }
 }
 exports.createAlbum = async (req,res) =>{
-    let album = new albumModel({id:req.body.albumId,numero:req.body.numero,description:req.body.description});
+    let album = new albumModel(req.body);
     album.save((error) => {
         if (error) {
             res.status(401);

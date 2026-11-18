@@ -4,7 +4,7 @@ module.exports = (server,corsConfig) => {
 
     
     
-    server.post("/album/get/:albumId",cors(corsConfig),albumController.findAlbum);
+    server.get("/album/:albumId",cors(corsConfig),albumController.findAlbum);
     server.post("/album/create/",cors(corsConfig),albumController.createAlbum);
 
 

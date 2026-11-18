@@ -9,17 +9,9 @@ let imageSchema = new Schema({
         auto: true
     },     
     image: { type: String },
-    albumId: {type: mongoose.Schema.Types.ObjectId, ref:"album"},
-    grid: [
-        {
-        gridId: { type: String, required: true },
-        w: { type: Number },
-        h: { type: Number },
-        x: { type: Number },
-        y: { type: Number },
-        description: {type: String}
-        }
-    ]
+    albumId: {type: Number},
+    page: { type: Number},
+    description:{ type:String}
 });
 
 module.exports = mongoose.model("images", imageSchema,"images");

@@ -13,7 +13,7 @@ services:
     environment:
         - ENV_TYPE=prod
         - NODE_PORT= 8083
-        - MONGODB_URL=mongodb://admin:F8G3iKGT%408cASsGy@37.59.112.87:27017/AbatJourImpromptu?authSource=admin&authMechanism=SCRAM-SHA-256
+        - MONGODB_URL=mongodb://admin:F8G3iKGT%408cASsGy@37.59.112.87:27017/BackInTime?authSource=admin&authMechanism=SCRAM-SHA-256
 
     stdin_open: true
     tty: true
